@@ -64,7 +64,7 @@ type Options = {
  * @param {number} max - Biggest allowed value
  * @return {number}
  */
-export function clampRandom(min: number, max: number): number {
+function clampRandom(min: number, max: number): number {
   return min + Math.random() * (max - min);
 }
 
@@ -77,7 +77,7 @@ export function clampRandom(min: number, max: number): number {
  * @param {Circle} circle - Circle size
  * @return {Sample}
  */
-export function createFirstSample(bounds: Bounds, circle: Circle): Sample {
+function createFirstSample(bounds: Bounds, circle: Circle): Sample {
   const {x, y, width, height} = bounds;
   const { radius } = circle;
 
@@ -99,7 +99,7 @@ export function createFirstSample(bounds: Bounds, circle: Circle): Sample {
  * @param {number} minDist - Minimum distance between samples
  * @return {Sample}
  */
-export function createSampleFromSample(sample: Sample, circles: CircleList, minDist: number): Sample {
+function createSampleFromSample(sample: Sample, circles: CircleList, minDist: number): Sample {
   const randomIndex = Math.floor(Math.random() * circles.length);
   const { radius } = circles[randomIndex];
   const angle: number = Math.random() * Math.PI * 2;
@@ -124,7 +124,7 @@ export function createSampleFromSample(sample: Sample, circles: CircleList, minD
  * @param {number} cols - Length of columns in grid
  * @return {number}
  */
-export function getIndexInGrid(sample: Sample, cellSize: number, cols: number): number {
+function getIndexInGrid(sample: Sample, cellSize: number, cols: number): number {
   const col: number = Math.floor(sample.x / cellSize);
   const row: number = Math.floor(sample.y / cellSize);
 
@@ -144,7 +144,7 @@ export function getIndexInGrid(sample: Sample, cellSize: number, cols: number): 
  * @param {Bounds} bounds - Bounds of container
  * @return {boolean}
  */
-export function isInBounds(sample: Sample, col: number, row: number, cols: number, rows: number, bounds: Bounds): boolean {
+function isInBounds(sample: Sample, col: number, row: number, cols: number, rows: number, bounds: Bounds): boolean {
   return (
     col < cols &&
     row < rows &&
@@ -168,7 +168,7 @@ export function isInBounds(sample: Sample, col: number, row: number, cols: numbe
  * @param {SampleList} grid - List of samples that represents a two dimensional grid
  * @return {boolean}
  */
-export function isAllowedToDraw(
+function isAllowedToDraw(
   sample: Sample,
   cellSize: number,
   cols: number,
@@ -206,7 +206,7 @@ export function isAllowedToDraw(
  * @param {*} parent - parent html element
  * @return {boolean}
  */
-export function hasValidParent(parent: any): boolean {
+function hasValidParent(parent: any): boolean {
   return parent && typeof parent.getBoundingClientRect === 'function';
 }
 
@@ -218,7 +218,7 @@ export function hasValidParent(parent: any): boolean {
  * @param {*} circleList - Radius of sample
  * @return {boolean}
  */
-export function hasValidCircleList(circleList: any): boolean {
+function hasValidCircleList(circleList: any): boolean {
   return Array.isArray(circleList) &&
     circleList.length > 0 &&
     typeof circleList.reduce((t: number, v: Circle) => v && v.radius ? t + v.radius : '', 0) === 'number';
@@ -232,7 +232,7 @@ export function hasValidCircleList(circleList: any): boolean {
  * @param {*} color - Color
  * @return {boolean}
  */
-export function hasValidColor(color: any): boolean {
+function hasValidColor(color: any): boolean {
   return typeof color === 'string';
 }
 
@@ -244,7 +244,7 @@ export function hasValidColor(color: any): boolean {
  * @param {*} minDist - Minimum distance between samples
  * @return {boolean}
  */
-export function hasValidMinDist(minDist: any): boolean { return typeof minDist === 'number'; }
+function hasValidMinDist(minDist: any): boolean { return typeof minDist === 'number'; }
 
 /**
  * Checks if given maximum tries is a number
@@ -254,7 +254,7 @@ export function hasValidMinDist(minDist: any): boolean { return typeof minDist =
  * @param {*} maxTries - Maximum amount of tries until sample is dead
  * @return {boolean}
  */
-export function hasValidMaxTries(maxTries: any): boolean { return typeof maxTries === 'number'; }
+function hasValidMaxTries(maxTries: any): boolean { return typeof maxTries === 'number'; }
 
 /**
  * Renders the circles in the parent container
@@ -308,7 +308,7 @@ function createSampleElement(sample: Sample, circleColor: string): HTMLDivElemen
  * @function kusamaGenerator
  * @param {Options} options - Configurable options are: bounds, minDist, maxTries
  */
-export default function kusamaGenerator(options: Options): void {
+function kusamaGenerator(options: Options): void {
   // These values will be used if there's no given minDist and / or maxTries in options
   const DEFAULT_MIN_DIST: number = 20;
   const DEFAULT_MAX_TRIES: number = 30;
