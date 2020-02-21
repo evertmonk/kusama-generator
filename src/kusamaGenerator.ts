@@ -308,7 +308,7 @@ function createSampleElement(sample: Sample, circleColor: string): HTMLDivElemen
  * @function kusamaGenerator
  * @param {Options} options - Configurable options are: bounds, minDist, maxTries
  */
-function kusamaGenerator(options: Options): void {
+export default function kusamaGenerator(options: Options): void {
   // These values will be used if there's no given minDist and / or maxTries in options
   const DEFAULT_MIN_DIST: number = 20;
   const DEFAULT_MAX_TRIES: number = 30;
