@@ -1,2 +1,6 @@
 # kusama-generator
-Art Generator inspired by Yayoi Kusama
+Generates Yayoi Kusama inspired art
+
+## How to use
+ * `yarn`
+ * `yarn start`

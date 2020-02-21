@@ -1,0 +1,19 @@
+{
+  "name": "poisson-disc-sampling-for-images",
+  "version": "1.0.0",
+  "description": "Poisson Disc Sampler to evenly position images without overlap",
+  "main": "src/index.js",
+  "repository": "https://github.com/evertmonk/poisson-disc-sampling-for-images.git",
+  "author": "Evert van der Horst <evert.van.der.horst@mediamonks.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "parcel ./index.html",
+    "tsc": "tsc",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.7.5"
+  }
+}
