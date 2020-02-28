@@ -11,4 +11,4 @@ const circles = [
   // { radius: 320 },
 ];
 
-parent && kusamaGenerator({ parent, circles, bgColor: '#ffc107', circleColor: '#000', minDist: 50, maxTries: 30 });
+parent && kusamaGenerator({ parent, circles, bgColor: '#E1AE14', circleColor: '#000', minDist: 10, maxTries: 30 });

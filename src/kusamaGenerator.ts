@@ -257,46 +257,51 @@ function hasValidMinDist(minDist: any): boolean { return typeof minDist === 'num
 function hasValidMaxTries(maxTries: any): boolean { return typeof maxTries === 'number'; }
 
 /**
- * Renders the circles in the parent container
+ * Creates a canvas that is appended to the parent
  *
  * @private
  * @function renderSamples
  * @param {HTMLElement} parent
+ * @param {Bounds} bounds
  * @param {SampleList} grid
  * @param {string} bgColor
  * @param {string} circleColor
  */
-function renderSamples(parent: HTMLElement, grid: SampleList, bgColor: string, circleColor: string): void {
-  parent.style.background = bgColor;
+function renderSamples(parent: HTMLElement, bounds: Bounds, grid: SampleList, bgColor: string, circleColor: string): void {
+  const canvas: HTMLCanvasElement = document.createElement('canvas');
+  const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
 
-  grid.forEach((sample: any): void => {
-    parent.appendChild(createSampleElement(sample, circleColor));
-  });
+  if (!ctx) return;
+
+  ctx.canvas.width = bounds.width;
+  ctx.canvas.height = bounds.height;
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  grid.forEach((sample: Sample|undefined): void => createSampleElement(ctx, sample, circleColor));
+
+  parent.appendChild(canvas);
 }
 
 /**
- * Creates a circle element
+ * Draw a circle on canvas
  *
  * @private
  * @function createSampleElement
- * @param {Sample} sample
+ * @param {CanvasRenderingContext2D} ctx
+ * @param {Sample|undefined} sample
  * @param {string} circleColor
- * @return {HTMLDivElement}
+ * @return {void}
  */
-function createSampleElement(sample: Sample, circleColor: string): HTMLDivElement {
-  const el: HTMLDivElement = document.createElement('div');
-  const size: number = sample.radius * 2;
+function createSampleElement(ctx: CanvasRenderingContext2D, sample: Sample|undefined, circleColor: string) {
+  if (!sample) return;
 
-  el.style.position = 'absolute';
-  el.style.background = circleColor;
-  el.style.borderRadius = '50%';
-  el.style.transform = 'translate(-50%, -50%)';
-  el.style.left = `${sample.x}px`;
-  el.style.top = `${sample.y}px`;
-  el.style.width = `${size}px`;
-  el.style.height = `${size}px`;
-
-  return el;
+  ctx.fillStyle = circleColor;
+  ctx.fillRect(sample.x, sample.y, 1, 1);
+  ctx.beginPath();
+  ctx.arc(sample.x, sample.y, sample.radius, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.closePath();
 }
 
 // Public functions
@@ -435,5 +440,5 @@ export default function kusamaGenerator(options: Options): void {
   }
 
   // All the samples have been generated and can be rendered
-  renderSamples(options.parent, GRID, BG_COLOR, CIRCLE_COLOR);
+  renderSamples(options.parent, BOUNDS, GRID, BG_COLOR, CIRCLE_COLOR);
 };
